@@ -20,21 +20,51 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 
 	Board b;
 
+	static final int sideX = 1010;
+
+	String[] messages = new String[] { "Use the arrow keys or\n mouse click to select\n a tile.",
+			"Press a number 1-9 to\n enter that value in the\n selected tile.",
+			"Press 0 to remove the\n current value from the\n selected tile.",
+			"Pressing c shows the\n board in color-only mode.\n Try it out!", "Press r to reset\n the game." };
+	int count = 0, messageSpeed = 150;
+
 	public void paint(Graphics g) {
 		g.setColor(Color.BLACK);
-		g.setFont(new Font("Dialog", Font.PLAIN, 20));
+		g.setFont(new Font("Monospaced", Font.PLAIN, 20));
 
 		g.fillRect(0, 0, screenW, screenH);
 
 		g.setColor(Color.WHITE);
 		b.paint(g);
 
-		g.setFont(new Font("Dialog", Font.PLAIN, 20));
+		g.setFont(new Font("Monospaced", Font.PLAIN, 20));
 		g.setColor(Color.WHITE);
 
-		g.drawString("Board is " + (b.isValid() ? "" : "invalid and ") + (b.isFull() ? "" : "in") + "complete", 1010,
-				30);
+		printLines(g, b.status(), 30);
 
+		{
+			if (count > (messages.length) * messageSpeed - 3) {
+				count = 0;
+			}
+
+			for (int i = 0; i < messages.length; i++) {
+				if (count < (i + 1) * messageSpeed) {
+					printLines(g, messages[i], screenH - 360);
+					break;
+				}
+			}
+
+			count++;
+		}
+	}
+
+	public void printLines(Graphics g, String m, int y) {
+		if (m.length() > 0) {
+			int subIndex = m.indexOf("\n");
+			g.drawString(m.substring(0, subIndex > -1 ? subIndex : m.length()), sideX, y);
+			printLines(g, m.substring(subIndex > -1 ? subIndex + 2 : m.length()), y + 20);
+
+		}
 	}
 
 	public static void main(String[] arg) {
@@ -94,6 +124,9 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 		case 67: // c
 			b.toggleColors();
 			break;
+		case 82: // r
+			generate();
+			break;
 
 		default:
 			System.out.println("Unindentified " + arg0);
@@ -119,10 +152,12 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 				}
 			}
 			break;
+		case 3:
+			System.exit(0);
+			break;
 
 		default:
 			System.out.println(arg0);
-			System.exit(0);
 			break;
 		}
 

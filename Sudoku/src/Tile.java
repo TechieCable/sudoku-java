@@ -3,39 +3,31 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
 public class Tile {
-	private static int r1 = 0, c1 = 0;
 	private static final int size = 110;
 	private static final String[] c = { "c0c0c0", "ff0000", "ff8000", "ffff00", "14ee00", "096900", "0000ff", "00d4ff",
 			"440099", "ffaac6" };
 
-	int row, col;
+	private int row, col;
 	private int x, y;
-	int value;
 	private boolean highlight, active;
-	boolean colorsOnly;
-	boolean setValue;
 
-	public Tile() {
-		{
-			this.row = r1;
-			this.col = c1;
-			c1++;
-			if (c1 > 8) {
-				c1 = 0;
-				r1++;
-			}
-			if (r1 > 8) {
-				r1 = 0;
-			}
-		}
+	int value;
+	boolean colorsOnly, setValue;
 
-		x = 10 + (size * col);
-		y = 10 + (size * row);
+	public Tile(int row, int col) {
+		this.row = row;
+		this.col = col;
+		x = 10 + (col * size);
+		y = 10 + (row * size);
 		value = 0;
 		highlight = false;
 		active = false;
 		colorsOnly = false;
 		setValue = true;
+	}
+
+	public Tile() {
+		this(0, 0);
 	}
 
 	public void paint(Graphics g) {
@@ -75,12 +67,12 @@ public class Tile {
 		}
 	}
 
-	public boolean clicked(MouseEvent m) {
-		return ((m.getX() > x) && (m.getX() < x + size) && (m.getY() > y) && (m.getY() < y + size));
-	}
-
 	public String toString() {
 		return "Tile [row=" + row + ", col=" + col + ", value=" + value + "]";
+	}
+
+	public boolean clicked(MouseEvent m) {
+		return ((m.getX() > x) && (m.getX() < x + size) && (m.getY() > y) && (m.getY() < y + size));
 	}
 
 	public void highlight(boolean x) {

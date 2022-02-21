@@ -11,11 +11,11 @@ public class Board {
 	public Board() {
 		for (int r = 0; r < tiles.length; r++) {
 			for (int c = 0; c < tiles[r].length; c++) {
-				tiles[r][c] = new Tile();
+				tiles[r][c] = new Tile(r, c);
 			}
 		}
 		for (int i = 0; i < squares.length; i++) {
-			squares[i] = new Square();
+			squares[i] = new Square(i / 3, i % 3);
 		}
 
 		generateDiagonals(0, 0);
@@ -24,12 +24,18 @@ public class Board {
 		remove(30);
 	}
 
+	public String status() {
+		return "Board is " + (isFull() ? "" : "in") + "complete" + (isValid() ? "" : "\n and INVALID");
+	}
+
 	public void remove(int n) {
 		for (int i = 0; i < n; i++) {
 			int row = (int) (Math.random() * 9);
 			int col = (int) (Math.random() * 9);
 			tiles[row][col].value = 0;
 			tiles[row][col].setValue = false;
+			tiles[tiles.length - col - 1][tiles.length - row - 1].value = 0;
+			tiles[tiles.length - col - 1][tiles.length - row - 1].setValue = false;
 		}
 	}
 
@@ -109,15 +115,12 @@ public class Board {
 	public boolean isValid() {
 		for (int i = 0; i < tiles.length; i++) {
 			if (row(i).duplicate()) {
-				System.err.println("Row#" + i + " has duplicates.");
 				return false;
 			}
 			if (col(i).duplicate()) {
-				System.err.println("Col#" + i + " has duplicates.");
 				return false;
 			}
 			if (square(i / 3, i % 3).duplicate()) {
-				System.err.println("Square#" + i + " (" + i / 3 + ", " + i % 3 + ") has duplicates.");
 				return false;
 			}
 		}
@@ -126,12 +129,14 @@ public class Board {
 
 	public void set(int n) {
 		if (!tiles[activeR][activeC].setValue) { // if not a set value
-			if (n == 0) {
-				tiles[activeR][activeC].value = 0;
-			}
-			if (!row(activeR).has(n) && !col(activeC).has(n) && !square(activeR, activeC).has(n)) {
-				tiles[activeR][activeC].value = n;
-			}
+			tiles[activeR][activeC].value = n;
+
+//			if (n == 0) {
+//				tiles[activeR][activeC].value = 0;
+//			}
+//			if (!row(activeR).has(n) && !col(activeC).has(n) && !square(activeR, activeC).has(n)) {
+//				tiles[activeR][activeC].value = n;
+//			}
 		}
 	}
 

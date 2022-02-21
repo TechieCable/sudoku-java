@@ -1,28 +1,20 @@
 import java.awt.Graphics;
 
 public class Square {
-	private static int r1 = 0, c1 = 0;
 	private static final int size = 330;
 
 	int row, col;
 	int x, y;
 
-	public Square() {
-		{
-			this.row = r1;
-			this.col = c1;
-			c1++;
-			if (c1 > 2) {
-				c1 = 0;
-				r1++;
-			}
-			if (r1 > 2) {
-				r1 = 0;
-			}
-		}
-
+	public Square(int row, int col) {
+		this.row = row;
+		this.col = col;
 		x = 10 + (col * size);
 		y = 10 + (row * size);
+	}
+
+	public Square() {
+		this(0, 0);
 	}
 
 	public void paint(Graphics g) {

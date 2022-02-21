@@ -43,7 +43,7 @@ public class Section {
 		int[] has = has();
 		for (int i = 0; i < has.length; i++) {
 			for (int j = i + 1; j < has.length; j++) {
-				if (has[i] == has[j] && has[i] != 0) {
+				if (has[i] != 0 && has[i] == has[j]) {
 					return true;
 				}
 			}
