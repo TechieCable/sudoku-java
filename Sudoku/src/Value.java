@@ -9,12 +9,18 @@ public class Value {
 		}
 	}
 
+	public Value(int[] n) {
+		for (int i = 0; i < n.length; i++) {
+			values.add(n[i]);
+		}
+	}
+
 	public int size() {
 		return values.size();
 	}
 
 	public int remove(int n) {
-		for (int i = 0; i < values.size(); i++) {
+		for (int i = 0; i < size(); i++) {
 			if (values.get(i) == n) {
 				return values.remove(i);
 			}
@@ -29,12 +35,7 @@ public class Value {
 	}
 
 	public boolean contains(int n) {
-		for (int i = 0; i < values.size(); i++) {
-			if (values.get(i) == n) {
-				return true;
-			}
-		}
-		return false;
+		return values.indexOf(n) != -1;
 	}
 
 	public String toString() {
@@ -42,10 +43,10 @@ public class Value {
 	}
 
 	public int get() {
-		if (values.size() == 0) {
+		if (size() == 0) {
 			return 0;
 		}
-		return values.get((int) (Math.random() * values.size()));
+		return values.get((int) (Math.random() * size()));
 	}
 
 }

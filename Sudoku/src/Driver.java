@@ -15,12 +15,10 @@ import javax.swing.Timer;
 @SuppressWarnings("serial")
 public class Driver extends JPanel implements ActionListener, KeyListener, MouseListener {
 
-	public int screenW = 1030, screenH = 1050;
+	private static final int screenW = 1330, screenH = 1050;
 	// screenW = 1030
 
 	Board b;
-
-	Square[] squares = new Square[9];
 
 	public void paint(Graphics g) {
 		g.setColor(Color.BLACK);
@@ -30,10 +28,12 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 
 		g.setColor(Color.WHITE);
 		b.paint(g);
-		
-		for (int i = 0; i < squares.length; i++) {
-			squares[i].paint(g);
-		}
+
+		g.setFont(new Font("Dialog", Font.PLAIN, 20));
+		g.setColor(Color.WHITE);
+
+		g.drawString("Board is " + (b.isValid() ? "" : "invalid and ") + (b.isFull() ? "" : "in") + "complete", 1010,
+				30);
 
 	}
 
@@ -60,9 +60,6 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 
 	public void generate() {
 		b = new Board();
-		for (int i = 0; i < squares.length; i++) {
-			squares[i] = new Square();
-		}
 	}
 
 	Timer t = new Timer(16, this);
@@ -72,6 +69,36 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 	}
 
 	public void keyPressed(KeyEvent arg0) {
+		try {
+			int x = Integer.parseInt(arg0.getKeyChar() + "");
+			if (x >= 0 && x <= 9) {
+				b.set(x);
+				return;
+			}
+		} catch (Exception e) {
+		}
+
+		switch (arg0.getKeyCode()) {
+		case 38: // up
+			b.active(b.activeR - 1, b.activeC);
+			break;
+		case 40: // down
+			b.active(b.activeR + 1, b.activeC);
+			break;
+		case 37: // left
+			b.active(b.activeR, b.activeC - 1);
+			break;
+		case 39: // right
+			b.active(b.activeR, b.activeC + 1);
+			break;
+		case 67: // c
+			b.toggleColors();
+			break;
+
+		default:
+			System.out.println("Unindentified " + arg0);
+			break;
+		}
 	}
 
 	public void keyReleased(KeyEvent arg0) {
@@ -81,7 +108,24 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 	}
 
 	public void mouseClicked(MouseEvent arg0) {
-		System.exit(0);
+		switch (arg0.getButton()) {
+		case 1:
+			for (int r = 0; r < b.tiles.length; r++) {
+				for (int c = 0; c < b.tiles[r].length; c++) {
+					if (b.tiles[r][c].clicked(arg0)) {
+						b.active(r, c);
+						break;
+					}
+				}
+			}
+			break;
+
+		default:
+			System.out.println(arg0);
+			System.exit(0);
+			break;
+		}
+
 	}
 
 	public void mouseEntered(MouseEvent arg0) {

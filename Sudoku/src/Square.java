@@ -1,8 +1,8 @@
-import java.awt.Color;
 import java.awt.Graphics;
 
 public class Square {
 	private static int r1 = 0, c1 = 0;
+	private static final int size = 330;
 
 	int row, col;
 	int x, y;
@@ -21,14 +21,13 @@ public class Square {
 			}
 		}
 
-		x = 10 + (col * 330);
-		y = 10 + (row * 330);
+		x = 10 + (col * size);
+		y = 10 + (row * size);
 	}
 
 	public void paint(Graphics g) {
-		g.setColor(Color.BLACK);
-		for (int i = 1; i < 5; i++) {
-			g.drawRect(x - i, y - i, 330 + (i * 2), 330 + (i * 2));
+		for (int i = 0; i < 5; i++) {
+			g.drawRect(x - i, y - i, size + (i * 2), size + (i * 2));
 		}
 	}
 }
