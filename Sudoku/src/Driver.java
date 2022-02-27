@@ -89,6 +89,16 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 	}
 
 	public void generate() {
+		int[][] values = new int[9][9];
+		values[0] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		values[1] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		values[2] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		values[3] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		values[4] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		values[5] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		values[6] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		values[7] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		values[8] = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 		b = new Board();
 	}
 

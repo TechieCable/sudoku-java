@@ -9,6 +9,28 @@ public class Board {
 	private boolean colorsOnly = false;
 
 	public Board() {
+		declarations();
+
+		generateDiagonals(0, 0);
+		generate(0, 3);
+
+		remove(30);
+	}
+
+	public Board(int[][] b) {
+		declarations();
+
+		for (int r = 0; r < tiles.length; r++) {
+			for (int c = 0; c < tiles[r].length; c++) {
+				tiles[r][c].value = b[r][c];
+				if (b[r][c] == 0) {
+					tiles[r][c].setValue = false;
+				}
+			}
+		}
+	}
+
+	public void declarations() {
 		for (int r = 0; r < tiles.length; r++) {
 			for (int c = 0; c < tiles[r].length; c++) {
 				tiles[r][c] = new Tile(r, c);
@@ -17,11 +39,6 @@ public class Board {
 		for (int i = 0; i < squares.length; i++) {
 			squares[i] = new Square(i / 3, i % 3);
 		}
-
-		generateDiagonals(0, 0);
-		generate(0, 3);
-
-		remove(30);
 	}
 
 	public String status() {
@@ -130,13 +147,6 @@ public class Board {
 	public void set(int n) {
 		if (!tiles[activeR][activeC].setValue) { // if not a set value
 			tiles[activeR][activeC].value = n;
-
-//			if (n == 0) {
-//				tiles[activeR][activeC].value = 0;
-//			}
-//			if (!row(activeR).has(n) && !col(activeC).has(n) && !square(activeR, activeC).has(n)) {
-//				tiles[activeR][activeC].value = n;
-//			}
 		}
 	}
 
