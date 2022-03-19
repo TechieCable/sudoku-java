@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -74,7 +75,7 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 
 	public Driver() {
 		JFrame frame = new JFrame("Sudoku");
-//		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(XXXXXX.class.getResource("/imgs/")));
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(Driver.class.getResource("/imgs/sudoku.png")));
 		frame.setSize(screenW, screenH);
 		frame.add(this);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
